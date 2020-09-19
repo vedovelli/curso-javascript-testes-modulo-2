@@ -40,6 +40,7 @@
     "husky": "^4.3.0",
     "jest": "^26.4.2",
     "lint-staged": "^10.3.0",
+    "miragejs": "^0.1.40",
     "prettier": "^2.1.1",
     "vue-jest": "^3.0.4"
   }

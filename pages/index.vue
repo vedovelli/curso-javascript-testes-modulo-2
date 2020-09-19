@@ -13,14 +13,17 @@
 </template>
 
 <script>
-import ProductCard from '@/components/ProductCard'
-import products from '@/mocks/products.json'
+import ProductCard from '@/components/ProductCard';
+
 export default {
   components: { ProductCard },
-  computed: {
-    products() {
-      return products
-    },
+  data() {
+    return {
+      products: [],
+    };
   },
-}
+  async created() {
+    this.products = (await this.$axios.get('/api/products')).data.products;
+  },
+};
 </script>
