@@ -5,6 +5,7 @@
       :style="`background-image: url('${product.image}');`"
     >
       <button
+        @click="addToCart"
         class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
       >
         <svg
@@ -36,6 +37,11 @@ export default {
     product: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    addToCart() {
+      this.$emit('addToCart', { product: this.product });
     },
   },
 };
