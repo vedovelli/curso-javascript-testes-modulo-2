@@ -1,14 +1,21 @@
 import { Server } from 'miragejs';
-import products from '@/mocks/products.json';
+import factories from './factories';
+import routes from './routes';
+import models from './models';
+import seeds from './seeds';
 
-export const makeServer = ({ environment = 'development' } = {}) => {
-  return new Server({
+const config = (environment) => {
+  const config = {
     environment,
-    routes() {
-      this.namespace = 'api';
-      this.get('products', () => ({
-        products,
-      }));
-    },
-  });
+    factories,
+    models,
+    routes,
+    seeds,
+  };
+
+  return config;
 };
+
+export function makeServer({ environment = 'development' } = {}) {
+  return new Server(config(environment));
+}

@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import CartItem from '@/components/CartItem'
+import CartItem from '@/components/CartItem';
 export default {
   components: { CartItem },
-}
+};
 </script>
