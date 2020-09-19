@@ -6,7 +6,7 @@
       <div
         class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6"
       >
-        <product-card />
+        <product-card v-for="(item, index) in 12" :key="index" />
       </div>
     </div>
   </main>
