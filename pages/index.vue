@@ -31,22 +31,22 @@ export default {
       searchTerm: '',
     };
   },
+  computed: {
+    list() {
+      if (this.searchTerm !== '') {
+        return this.products.filter(({ title }) => {
+          return title.includes(this.searchTerm);
+        });
+      }
+      return this.products;
+    },
+  },
   async created() {
     try {
       this.products = (await this.$axios.get('/api/products')).data.products;
     } catch (error) {
       this.errorMessage = 'Problemas ao carregar a lista!';
     }
-  },
-  computed: {
-    list() {
-      if (this.searchTerm !== '') {
-        return this.products.filter(({ title }) => {
-          return title.indexOf(this.searchTerm) > -1;
-        });
-      }
-      return this.products;
-    },
   },
   methods: {
     setSearchTerm({ term }) {
