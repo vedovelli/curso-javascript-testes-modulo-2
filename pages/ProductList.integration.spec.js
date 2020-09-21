@@ -168,4 +168,10 @@ describe('ProductList - integration', () => {
     expect(wrapper.vm.searchTerm).toEqual('');
     expect(cards).toHaveLength(11);
   });
+
+  it('should display error message when promise rejects', async () => {
+    const { wrapper } = await mountProductList(1, {}, true);
+
+    expect(wrapper.text()).toContain('Problemas ao carregar a lista!');
+  });
 });
