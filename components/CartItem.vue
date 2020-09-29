@@ -44,3 +44,13 @@
     <span class="text-gray-600">20$</span>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'CartItem',
+  props: {
+    product: Object,
+    required: true,
+  },
+};
+</script>
