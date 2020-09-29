@@ -1,10 +1,15 @@
 <template>
   <div
     class="fixed right-0 top-0 max-w-xs w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300"
+    :class="{ hidden: !isOpen }"
   >
     <div class="flex items-center justify-between">
       <h3 class="text-2xl font-medium text-gray-700">Your cart</h3>
-      <button class="text-gray-600 focus:outline-none">
+      <button
+        data-testid="close-button"
+        class="text-gray-600 focus:outline-none"
+        @click="close"
+      >
         <svg
           class="h-5 w-5"
           fill="none"
@@ -57,5 +62,16 @@
 import CartItem from '@/components/CartItem';
 export default {
   components: { CartItem },
+  props: {
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    close() {
+      this.$emit('close');
+    },
+  },
 };
 </script>
