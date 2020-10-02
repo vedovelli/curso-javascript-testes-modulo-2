@@ -12,16 +12,20 @@ export class CartManager {
     this.state = Vue.observable(initialState);
   }
 
+  getState() {
+    return this.state;
+  }
+
   open() {
     this.state.open = true;
 
-    return this.state;
+    return this.getState();
   }
 
   close() {
     this.state.open = false;
 
-    return this.state;
+    return this.getState();
   }
 
   productIsInTheCart(product) {
@@ -37,7 +41,7 @@ export class CartManager {
       this.state.items.push(product);
     }
 
-    return this.state;
+    return this.getState();
   }
 
   removeProduct(productId) {
@@ -45,19 +49,19 @@ export class CartManager {
       ...this.state.items.filter((product) => product.id !== productId),
     ];
 
-    return this.state;
+    return this.getState();
   }
 
   clearProducts() {
     this.state.items = [];
 
-    return this.state;
+    return this.getState();
   }
 
   clearCart() {
     this.clearProducts();
     this.close();
 
-    return this.state;
+    return this.getState();
   }
 }
