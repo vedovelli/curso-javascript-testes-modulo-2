@@ -1,5 +1,11 @@
 import Vue from 'vue';
 
+export default {
+  install: (Vue) => {
+    Vue.prototype.$cart = new CartManager();
+  },
+};
+
 const initialState = {
   open: false,
   items: [],
