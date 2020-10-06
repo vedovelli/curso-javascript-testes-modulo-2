@@ -53,7 +53,7 @@ describe('ProductList - integration', () => {
    * Basta passar no parametro overrides uma lista de
    * objetos com as propriedades que se quer.
    */
-  const getProducts = async (quantity = 10, overrides = []) => {
+  const getProducts = (quantity = 10, overrides = []) => {
     let overrideList = [];
 
     if (overrides.length > 0) {
@@ -77,7 +77,7 @@ describe('ProductList - integration', () => {
     overrides = [],
     shouldReject = false
   ) => {
-    const products = await getProducts(quantity, overrides);
+    const products = getProducts(quantity, overrides);
 
     if (shouldReject) {
       axios.get.mockReturnValue(Promise.reject(new Error('')));
@@ -173,5 +173,19 @@ describe('ProductList - integration', () => {
     const { wrapper } = await mountProductList(1, {}, true);
 
     expect(wrapper.text()).toContain('Problemas ao carregar a lista!');
+  });
+
+  it('should display the total quantity of products', async () => {
+    const { wrapper } = await mountProductList(27);
+    const label = wrapper.find('[data-testid="total-quantity-label"]');
+
+    expect(label.text()).toEqual('27 Products');
+  });
+
+  it('should display product (singular) when there is only 1 product', async () => {
+    const { wrapper } = await mountProductList(1);
+    const label = wrapper.find('[data-testid="total-quantity-label"]');
+
+    expect(label.text()).toEqual('1 Product');
   });
 });
