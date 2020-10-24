@@ -14,15 +14,39 @@ context('Store', () => {
   });
 
   it('should display the store', () => {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
 
     cy.get('body').contains('Brand');
     cy.get('body').contains('Wrist Watch');
   });
 
-  context.only('Store > Search for Products', () => {
+  context('Store > Product List', () => {
+    it('should display "0 Products" when no product is returned', () => {
+      cy.visit('/');
+      cy.get('[data-testid="product-card"]').should('have.length', 0);
+      cy.get('body').contains('0 Products');
+    });
+
+    it('should display "1 Product" when 1 product is returned', () => {
+      server.create('product');
+
+      cy.visit('/');
+      cy.get('[data-testid="product-card"]').should('have.length', 1);
+      cy.get('body').contains('1 Product');
+    });
+
+    it('should display "10 Products" when 10 products are returned', () => {
+      server.createList('product', 10);
+
+      cy.visit('/');
+      cy.get('[data-testid="product-card"]').should('have.length', 10);
+      cy.get('body').contains('10 Products');
+    });
+  });
+
+  context('Store > Search for Products', () => {
     it('should type in the search field', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit('/');
 
       cy.get('input[type="search"]')
         .type('Some text here')
@@ -35,7 +59,7 @@ context('Store', () => {
       });
       server.createList('product', 10);
 
-      cy.visit('http://localhost:3000');
+      cy.visit('/');
       cy.get('input[type="search"]').type('Relógio bonito');
       cy.get('[data-testid="search-form"]').submit();
       cy.get('[data-testid="product-card"]').should('have.length', 1);
@@ -44,7 +68,7 @@ context('Store', () => {
     it('should not return any product', () => {
       server.createList('product', 10);
 
-      cy.visit('http://localhost:3000');
+      cy.visit('/');
       cy.get('input[type="search"]').type('Relógio bonito');
       cy.get('[data-testid="search-form"]').submit();
       cy.get('[data-testid="product-card"]').should('have.length', 0);
