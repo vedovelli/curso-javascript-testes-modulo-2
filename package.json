@@ -9,17 +9,14 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "yarn lint:js",
+    "cypress:open": "cypress open",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:e2e": "start-server-and-test dev 3000 cypress:open"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
@@ -47,6 +44,7 @@
     "lint-staged": "^10.3.0",
     "miragejs": "^0.1.40",
     "prettier": "^2.1.1",
+    "start-server-and-test": "^1.11.5",
     "vue-jest": "^3.0.4"
   }
 }
