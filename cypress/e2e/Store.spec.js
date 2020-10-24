@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 import { makeServer } from '../../miragejs/server';
 
 context('Store', () => {
@@ -36,6 +34,7 @@ context('Store', () => {
 
     it('should toggle shopping cart visibility when button is clicked', () => {
       gid('toggle-button').as('toggleButton');
+      g('@toggleButton').click();
       g('@toggleButton').click();
       gid('shopping-cart').should('not.have.class', 'hidden');
       g('@toggleButton').click({ force: true });
