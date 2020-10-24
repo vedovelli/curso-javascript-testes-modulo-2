@@ -1,3 +1,5 @@
+import './commands';
+
 Cypress.on('window:before:load', (win) => {
   win.handleFromCypress = function (request) {
     return fetch(request.url, {
