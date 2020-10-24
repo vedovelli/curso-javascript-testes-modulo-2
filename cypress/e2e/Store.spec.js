@@ -35,7 +35,6 @@ context('Store', () => {
     it('should toggle shopping cart visibility when button is clicked', () => {
       gid('toggle-button').as('toggleButton');
       g('@toggleButton').click();
-      g('@toggleButton').click();
       gid('shopping-cart').should('not.have.class', 'hidden');
       g('@toggleButton').click({ force: true });
       gid('shopping-cart').should('have.class', 'hidden');
@@ -52,19 +51,19 @@ context('Store', () => {
     });
 
     it('should add 3 products to the cart', () => {
-      cy.addToCart([1, 3, 5]);
+      cy.addToCart({ indexes: [1, 3, 5] });
 
       gid('cart-item').should('have.length', 3);
     });
 
     it('should add 1 product to the cart', () => {
-      cy.addToCart(6);
+      cy.addToCart({ index: 6 });
 
       gid('cart-item').should('have.length', 1);
     });
 
     it('should add 1 product to the cart', () => {
-      cy.addToCart('all');
+      cy.addToCart({ indexes: 'all' });
 
       gid('cart-item').should('have.length', quantity);
     });
