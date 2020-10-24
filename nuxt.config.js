@@ -1,5 +1,5 @@
 export default {
-  mode: 'spa',
+  mode: process.env.NODE_ENV === 'production' ? 'universal' : 'spa',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'watch-store',
