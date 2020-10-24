@@ -22,20 +22,39 @@ context('Store', () => {
     g('body').contains('Wrist Watch');
   });
 
-  context('Store > Shopping Cart', () => {
-    it('should not display shopping cart when page first loads', () => {
+  context.only('Store > Shopping Cart', () => {
+    beforeEach(() => {
+      server.createList('product', 10);
       cy.visit('/');
+    });
 
+    it('should not display shopping cart when page first loads', () => {
       gid('shopping-cart').should('have.class', 'hidden');
     });
 
     it('should toggle shopping cart visibility when button is clicked', () => {
-      cy.visit('/');
       gid('toggle-button').as('toggleButton');
       g('@toggleButton').click();
       gid('shopping-cart').should('not.have.class', 'hidden');
       g('@toggleButton').click({ force: true });
       gid('shopping-cart').should('have.class', 'hidden');
+    });
+
+    it('should open shopping cart when a product is added', () => {
+      gid('product-card').first().find('button').click();
+      gid('shopping-cart').should('not.have.class', 'hidden');
+    });
+
+    it('should add first product to the cart', () => {
+      gid('product-card').first().find('button').click();
+      gid('cart-item').should('have.length', 1);
+    });
+
+    it.only('should add 3 products to the cart', () => {
+      gid('product-card').eq(1).find('button').click();
+      gid('product-card').eq(3).find('button').click({ force: true });
+      gid('product-card').eq(5).find('button').click({ force: true });
+      gid('cart-item').should('have.length', 3);
     });
   });
 
