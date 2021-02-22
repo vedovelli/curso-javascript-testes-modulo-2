@@ -98,7 +98,12 @@
         </nav>
       </div>
     </header>
-    <cart :products="products" :is-open="isCartOpen" @close="toggleCart" />
+    <cart
+      :products="products"
+      :is-open="isCartOpen"
+      @close="toggleCart"
+      @checkout="checkout"
+    />
     <nuxt />
     <footer class="bg-gray-200">
       <div
@@ -127,6 +132,15 @@ export default {
     },
   },
   methods: {
+    async checkout({ email }) {
+      const products = this.$cart.getState().items;
+      this.$axios.setHeader('email', email);
+      const res = await this.$axios.post('/api/order', { products });
+
+      if (res.order.id) {
+        this.$cart.clearProducts();
+      }
+    },
     toggleCart() {
       if (this.$cart.getState().open) {
         this.$cart.close();
