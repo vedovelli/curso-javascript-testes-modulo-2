@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import flushPromises from 'flush-promises';
 import axios from 'axios';
 import DefaultLayout from '@/layouts/default';
 import Cart from '@/components/Cart';
@@ -10,11 +11,26 @@ jest.mock('axios', () => ({
   setHeader: jest.fn(),
 }));
 
+const cartManager = new CartManager();
+
+function mountComponent(
+  providedCartManager = cartManager,
+  providedAxios = axios
+) {
+  return mount(DefaultLayout, {
+    mocks: {
+      $cart: providedCartManager,
+      $axios: providedAxios,
+    },
+    stubs: {
+      Nuxt: true,
+    },
+  });
+}
+
 describe('Default Layout', () => {
   let server;
   let products;
-
-  const cartManager = new CartManager();
 
   beforeEach(() => {
     server = makeServer({ environment: 'test' });
@@ -27,18 +43,8 @@ describe('Default Layout', () => {
   });
 
   it('should set email header on Axios when Cart emmits checkout event', async () => {
-    const wrapper = mount(DefaultLayout, {
-      mocks: {
-        $cart: cartManager,
-        $axios: axios,
-      },
-      stubs: {
-        Nuxt: true,
-      },
-    });
-
+    const wrapper = mountComponent();
     const cartComponent = wrapper.findComponent(Cart).vm;
-
     const email = 'vedovelli@gmail.com';
 
     await cartComponent.$emit('checkout', { email });
@@ -54,18 +60,8 @@ describe('Default Layout', () => {
 
     jest.spyOn(cartManager, 'clearProducts');
 
-    const wrapper = mount(DefaultLayout, {
-      mocks: {
-        $cart: cartManager,
-        $axios: axios,
-      },
-      stubs: {
-        Nuxt: true,
-      },
-    });
-
+    const wrapper = mountComponent(cartManager);
     const cartComponent = wrapper.findComponent(Cart).vm;
-
     const email = 'vedovelli@gmail.com';
 
     await cartComponent.$emit('checkout', { email });
@@ -81,18 +77,8 @@ describe('Default Layout', () => {
 
     jest.spyOn(cartManager, 'clearProducts');
 
-    const wrapper = mount(DefaultLayout, {
-      mocks: {
-        $cart: cartManager,
-        $axios: axios,
-      },
-      stubs: {
-        Nuxt: true,
-      },
-    });
-
+    const wrapper = mountComponent(cartManager);
     const cartComponent = wrapper.findComponent(Cart).vm;
-
     const email = 'vedovelli@gmail.com';
 
     await cartComponent.$emit('checkout', { email });
@@ -100,5 +86,19 @@ describe('Default Layout', () => {
     expect(cartManager.clearProducts).toHaveBeenCalledTimes(1);
   });
 
-  it.todo('should display error notice when Axios.post fails');
+  it('should display error notice when Axios.post fails', async () => {
+    jest.spyOn(cartManager, 'getState').mockReturnValue({
+      items: products,
+    });
+
+    jest.spyOn(axios, 'post').mockRejectedValue({});
+
+    const wrapper = mountComponent(cartManager, axios);
+    const cartComponent = wrapper.findComponent(Cart).vm;
+
+    await cartComponent.$emit('checkout', { email: 'vedovelli@gmail.com' });
+    await flushPromises();
+
+    expect(wrapper.find('[data-testid="error-message"]').exists()).toBe(true);
+  });
 });

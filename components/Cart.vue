@@ -109,6 +109,7 @@ export default {
       this.$emit('close');
     },
     checkout() {
+      /* istanbul ignore else */
       if (this.email) {
         this.$emit('checkout', { email: this.email });
       }
