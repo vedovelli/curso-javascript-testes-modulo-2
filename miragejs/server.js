@@ -13,6 +13,8 @@ const config = (environment) => {
     seeds,
   };
 
+  config.urlPrefix = 'http://localhost:5000';
+
   return config;
 };
 

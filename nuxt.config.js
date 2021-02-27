@@ -11,11 +11,6 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  env: {
-    USE_API: !!process.env.USE_API,
-    API_URL: process.env.API_URL,
-  },
-
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
@@ -36,10 +31,12 @@ export default {
     '@nuxtjs/pwa',
   ],
 
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {
-    baseURL: process.env.USE_API ? process.env.API_URL : null,
+  env: {
+    USE_API: !!process.env.USE_API,
   },
+
+  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+  axios: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
