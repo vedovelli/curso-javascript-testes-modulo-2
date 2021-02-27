@@ -11,6 +11,11 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
+  env: {
+    USE_API: !!process.env.USE_API,
+    API_URL: process.env.API_URL,
+  },
+
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
@@ -21,12 +26,7 @@ export default {
   components: false,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
-  ],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
@@ -37,7 +37,9 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: process.env.USE_API ? process.env.API_URL : null,
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},

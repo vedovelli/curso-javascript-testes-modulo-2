@@ -1,6 +1,10 @@
 import { createServer, Response } from 'miragejs';
-
-if (process.env.NODE_ENV === 'development') {
+// eslint-disable-next-line
+console.log({
+  USE_API: process.env.USE_API,
+  API_URL: process.env.API_URL,
+});
+if (process.env.NODE_ENV === 'development' && !process.env.USE_API) {
   require('@/miragejs/server').makeServer();
 }
 
