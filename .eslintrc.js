@@ -16,6 +16,5 @@ module.exports = {
     'plugin:cypress/recommended',
   ],
   plugins: ['prettier', 'cypress'],
-  // add your custom rules here
   rules: {},
 };
