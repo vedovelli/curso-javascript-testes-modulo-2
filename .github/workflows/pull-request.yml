@@ -37,9 +37,6 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Check if cache was hit
-        run: echo ${{ steps.yarn-cache.outputs.cache-hit }}
-
       - name: Install dependencies
         run: yarn --prefer-offline
 
