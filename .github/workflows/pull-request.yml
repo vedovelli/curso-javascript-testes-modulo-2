@@ -37,8 +37,7 @@ jobs:
         run: echo ${{ steps.yarn-cache.outputs.cache-hit }}
 
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn
+        run: yarn --prefer-offline
 
       # - name: Lint application
       #   run: yarn lint
