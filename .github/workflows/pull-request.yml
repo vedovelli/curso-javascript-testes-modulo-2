@@ -23,11 +23,13 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: '**/node_modules'
+          path: |
+            **/node_modules
+            ~/.cache
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn --prefer-offline
+        run: yarn --frozen-lockfile --prefer-offline
 
       - name: Run Jest tests
         run: yarn test
