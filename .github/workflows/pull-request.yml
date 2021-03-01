@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 12.18.x
           
-      - name: Get yarn cache directory path
+      - name: Get yarn cache directory path ##
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
