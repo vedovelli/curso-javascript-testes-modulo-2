@@ -7,6 +7,14 @@ jobs:
   build:
     runs-on: ubuntu-16.04
 
+    outputs:
+      test-chunks: ${{ steps['set-test-chunks'].outputs['test-chunks'] }}
+      test-chunk-ids: ${{ steps['set-test-chunk-ids'].outputs['test-chunk-ids'] }}
+
+    strategy:
+      matrix:
+        chunk: ${{ fromJson(build.outputs['test-chunk-ids']) }}
+
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -33,8 +41,19 @@ jobs:
       - name: Install dependencies
         run: yarn --prefer-offline
 
-      # - name: Lint application
-      #   run: yarn lint
+      - id: set-test-chunks
+        name: Set Chunks
+        run: echo "::set-output name=test-chunks::$(npx jest --listTests --json | jq -cM '[_nwise(length / 2 | floor)]')"
 
-      - name: Run tests
-        run: yarn test
+      - id: set-test-chunk-ids
+        name: Set Chunk IDs
+        run: echo "::set-output name=test-chunk-ids::$(echo $CHUNKS | jq -cM 'to_entries | map(.key)')"
+        env:
+          CHUNKS: ${{ steps['set-test-chunks'].outputs['test-chunks'] }}
+
+      # - name: Run tests
+      #   run: yarn test
+      - name: jest
+        run: echo $CHUNKS | jq '.[${{ matrix.chunk }}] | .[] | @text' | xargs npx jest
+        env:
+          CHUNKS: ${{ needs.setup.outputs['test-chunks'] }}
