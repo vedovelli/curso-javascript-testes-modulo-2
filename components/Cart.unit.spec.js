@@ -49,7 +49,7 @@ describe('Cart', () => {
     });
 
     expect(wrapper.find('[data-testid="clear-cart-button"]').exists()).toBe(
-      true
+      false
     );
   });
 
