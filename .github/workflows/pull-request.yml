@@ -37,6 +37,7 @@ jobs:
         run: echo steps.yarn-cache.outputs.cache-hit
 
       - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true' # Over here!
         run: yarn
 
       - name: Lint application
