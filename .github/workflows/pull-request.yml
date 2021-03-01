@@ -29,5 +29,8 @@ jobs:
       - name: Install dependencies
         run: yarn --prefer-offline
 
-      - name: Run tests
+      - name: Run Jest tests
         run: yarn test
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
