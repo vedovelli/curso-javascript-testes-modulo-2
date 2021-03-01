@@ -23,9 +23,7 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: |
-            **/node_modules
-            ~/.cache
+          path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
@@ -33,8 +31,3 @@ jobs:
 
       - name: Run Jest tests
         run: yarn test
-
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v2
-        with:
-          start: yarn test:e2e:headless
