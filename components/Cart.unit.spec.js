@@ -112,4 +112,51 @@ describe('Cart', () => {
 
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('should display an input type e-mail when there are items in the cart', () => {
+    const { wrapper } = mountCart();
+    const input = wrapper.find('input[type="email"]');
+
+    expect(input.exists()).toBe(true);
+  });
+
+  it('should hide the input type e-mail when there are NO items in the cart', async () => {
+    const { wrapper } = mountCart();
+
+    wrapper.setProps({
+      products: [],
+    });
+
+    await Vue.nextTick();
+
+    const input = wrapper.find('input[type="email"]');
+
+    expect(input.exists()).toBe(false);
+  });
+
+  it('should emit checkout event and send email when checkout button is clicked', async () => {
+    const { wrapper } = mountCart();
+    const form = wrapper.find('[data-testid="checkout-form"]');
+    const input = wrapper.find('input[type="email"]');
+    const email = 'vedovelli@gmail.com';
+
+    input.setValue(email);
+
+    await form.trigger('submit');
+
+    expect(wrapper.emitted().checkout).toBeTruthy();
+    expect(wrapper.emitted().checkout).toHaveLength(1);
+    expect(wrapper.emitted().checkout[0][0]).toEqual({
+      email,
+    });
+  });
+
+  it('should NOT emit checkout event when input email is empty', async () => {
+    const { wrapper } = mountCart();
+    const button = wrapper.find('[data-testid="checkout-button"]');
+
+    await button.trigger('click');
+
+    expect(wrapper.emitted().checkout).toBeFalsy();
+  });
 });

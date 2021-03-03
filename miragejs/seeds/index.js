@@ -13,7 +13,7 @@ const usersSeeder = (server) => {
 };
 
 const productsSeeder = (server) => {
-  server.createList('product', 25);
+  server.createList('product', 24);
 };
 
 export default function seeds(server) {
