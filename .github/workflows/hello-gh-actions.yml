@@ -5,11 +5,27 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Say hello to the World!
-        run: echo 'Hello World!'
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.18.x
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile --prefer-offline
+
+      - name: Run Jest tests
+        run: yarn test
+
+      - name: Run Linter
+        run: yarn lint
