@@ -50,6 +50,7 @@
     "lint-staged": "^10.3.0",
     "miragejs": "^0.1.40",
     "prettier": "^2.1.1",
+    "pretty-quick": "^3.1.0",
     "start-server-and-test": "^1.11.5",
     "vue-jest": "^3.0.4"
   }

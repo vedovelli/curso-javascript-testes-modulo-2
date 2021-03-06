@@ -1,5 +1,6 @@
 import Vue from 'vue';
 
+
 export default {
   install: Vue => {
     /* istanbul ignore next */
