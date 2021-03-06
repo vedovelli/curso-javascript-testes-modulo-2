@@ -12,6 +12,7 @@ if (window.Cypress) {
   const methods = ['get', 'put', 'patch', 'post', 'delete'];
 
   createServer({
+    urlPrefix: 'http://localhost:5000',
     environment: 'test',
     routes() {
       for (const domain of ['/', ...otherDomains]) {

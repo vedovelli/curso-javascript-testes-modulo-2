@@ -28,10 +28,10 @@ Cypress.Commands.add('addToCart', (mode) => {
     });
   };
 
-  if (!!mode.indexes && Array.isArray(mode.indexes)) {
-    addByIndexes();
-  } else if (!mode.index) {
+  if (mode.index) {
     addByIndex();
+  } else if (!!mode.indexes && Array.isArray(mode.indexes)) {
+    addByIndexes();
   } else if (!!mode.indexes && mode.indexes === 'all') {
     addAll();
   } else {
