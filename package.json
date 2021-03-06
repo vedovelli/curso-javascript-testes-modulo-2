@@ -16,7 +16,8 @@
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "test:e2e": "start-server-and-test dev 3000 cypress:open",
-    "test:e2e:headless": "start-server-and-test dev 3000 cypress:run"
+    "test:e2e:headless": "start-server-and-test dev 3000 cypress:run",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
@@ -44,11 +45,12 @@
     "eslint-plugin-prettier": "^3.1.4",
     "faker": "^5.1.0",
     "flush-promises": "^1.0.2",
-    "husky": "^4.3.0",
+    "husky": "^5.1.3",
     "jest": "^26.4.2",
     "lint-staged": "^10.3.0",
     "miragejs": "^0.1.40",
     "prettier": "^2.1.1",
+    "pretty-quick": "^3.1.0",
     "start-server-and-test": "^1.11.5",
     "vue-jest": "^3.0.4"
   }
