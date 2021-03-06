@@ -1,9 +1,9 @@
 import Vue from 'vue';
 
 export default {
-  install: (Vue) => {
+  install: Vue => {
     /* istanbul ignore next */
-    Vue.prototype.$cart = new CartManager();
+    Vue.prototype.$cart = new CartManager()
   },
 };
 
