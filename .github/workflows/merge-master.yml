@@ -1,7 +1,9 @@
 name: ci
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -22,10 +24,13 @@ jobs:
           node-version: 12.18.x
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile --prefer-offline
+        run: yarn --frozen-lockfile
 
       - name: Run Jest tests
         run: yarn test
 
       - name: Run Linter
         run: yarn lint
+
+      - name: Build app
+        run: yarn generate
