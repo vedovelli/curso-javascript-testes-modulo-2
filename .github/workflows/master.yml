@@ -1,7 +1,9 @@
 name: ci
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -24,8 +26,11 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Run Jest tests
-        run: yarn test
-
-      - name: Run Linter
-        run: yarn lint
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          headless: true
+          record: false
+          browser: chrome
+          start: yarn dev
+          wait-on: 'http://localhost:3000'
