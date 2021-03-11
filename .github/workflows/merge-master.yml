@@ -43,3 +43,11 @@ jobs:
         with:
           args: deploy --dir=dist --prod
           secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
+
+      - name: Notifica no Telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Após ${{ github.event_name }} o deploy foi feito na Netlify. 🚀
