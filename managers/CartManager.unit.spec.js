@@ -22,7 +22,7 @@ describe('CartManager', () => {
 
     expect(state).toEqual({
       items: [product],
-      open: true,
+      open: false,
     });
   });
 
