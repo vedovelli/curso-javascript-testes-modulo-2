@@ -29,6 +29,9 @@ jobs:
       - name: Run Jest tests
         run: yarn test
 
+      - name: Falha de propósito
+        run: exit 1
+
       - name: Run Linter
         run: yarn lint
 
@@ -44,10 +47,20 @@ jobs:
           args: deploy --dir=dist --prod
           secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
 
-      - name: Notifica no Telegram
+      - name: Notifica no Telegram - sucesso
         uses: appleboy/telegram-action@master
+        if: ${{ success() }}
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Após ${{ github.event_name }} o deploy foi feito na Netlify. 🚀
+
+      - name: Notifica no Telegram - falha
+        uses: appleboy/telegram-action@master
+        if: ${{ failure() }}
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Após ${{ github.event_name }} o deploy na Netlify falhou. 🚨
