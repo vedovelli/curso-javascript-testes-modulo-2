@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Run Jest tests
-        run: yarn test
-
       - name: Run Linter
         run: yarn lint
 
