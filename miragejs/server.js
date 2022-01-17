@@ -13,7 +13,9 @@ const config = (environment) => {
     seeds,
   };
 
-  config.urlPrefix = 'http://localhost:5000';
+  if (process.env.NODE_ENV !== 'development' && process.env.USE_API) {
+    config.urlPrefix = 'http://localhost:5000';
+  }
 
   return config;
 };
