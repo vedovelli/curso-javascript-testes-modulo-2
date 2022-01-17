@@ -2,6 +2,7 @@
   "env": {
     "test": {
       "presets": [
+        "vue",
         [
           "@babel/preset-env",
           {

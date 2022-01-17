@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
 import Vue from 'vue';
 import axios from 'axios';
+import ProductList from '.';
 import ProductCard from '@/components/ProductCard';
 import Search from '@/components/Search';
 import { makeServer } from '@/miragejs/server';
-import ProductList from '.';
 
 /**
  * O Jest substitui o método get por sua própria
@@ -80,7 +80,7 @@ describe('ProductList - integration', () => {
     const products = getProducts(quantity, overrides);
 
     if (shouldReject) {
-      axios.get.mockReturnValue(Promise.reject(new Error('')));
+      axios.get.mockReturnValue(Promise.reject(new Error('error')));
     } else {
       axios.get.mockReturnValue(Promise.resolve({ data: { products } }));
     }
